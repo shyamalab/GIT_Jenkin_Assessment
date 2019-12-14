@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  nginx:
+    container_name: v-nginx
+    image: nginx:1.13
+    restart: always
+    ports:
+     - 80:80
+     - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+  mysql-standalone-container:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin123
+      - MYSQL_DATABASE=notes_app
+      - MYSQL_USER=testuser
+      - MYSQL_PASSWORD=testuser@123
+    volumes:
+      - /data/mysql
+  springboot-docker-compose-mysql-app-container:
+    image: springboot-docker-compose-mysql-app:1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - mysql-standalone-container
+      - nginx
+    volumes:
+      - /data/springboot-docker-compose-mysql-app
