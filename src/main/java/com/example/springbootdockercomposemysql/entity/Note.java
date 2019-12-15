@@ -18,7 +18,17 @@ import java.util.Date;
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"},
         allowGetters = true)
 public class Note {
-    @Id
+    public Note() {
+		super();
+	}
+
+	public Note(@NotBlank String title, @NotBlank String content) {
+		super();
+		this.title = title;
+		this.content = content;
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

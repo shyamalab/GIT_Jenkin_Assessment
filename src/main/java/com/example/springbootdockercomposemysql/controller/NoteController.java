@@ -29,6 +29,12 @@ public class NoteController {
     public Note createNote(@Valid @RequestBody Note note) {
         return noteRepository.save(note);
     }
+    
+    @PostMapping("/create")
+    public Note createmanualnote() {
+      return noteRepository.save(new Note("First note", "Explanation first"));
+    }
+
 
     @GetMapping("/notes/{id}")
     public Note getNoteById(@PathVariable(value = "id") Long noteId) {
